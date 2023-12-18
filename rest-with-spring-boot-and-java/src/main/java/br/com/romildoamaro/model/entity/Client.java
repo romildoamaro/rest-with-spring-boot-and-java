@@ -2,6 +2,7 @@ package br.com.romildoamaro.model.entity;
 
 import java.time.LocalDate;
 
+import com.danielfariati.annotation.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -30,9 +31,10 @@ public class Client {
 	private String name;
 	
 	@Column(nullable = false, length = 11)
+	@CPF
 	private String cpf;
 	
-	@Column(name = "created_at")
+	@Column(name = "created_at", updatable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate createdAt;
 	
