@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.PrimaryKeyJoinColumns;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,19 +27,21 @@ public class Client {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(nullable = false, length = 150)
+	@PrimaryKeyJoinColumns(value = @PrimaryKeyJoinColumn)
+	@Column(name = "id_client")
+	private Long id;
+
+	@Column(name = "name", nullable = false)
 	private String name;
-	
-	@Column(nullable = false, length = 11)
+
+	@Column(name = "cpf", nullable = false, unique = true)
 	@CPF
 	private String cpf;
-	
+
 	@Column(name = "created_at", updatable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate createdAt;
-	
+
 	@PrePersist
 	public void prePersist() {
 		setCreatedAt(LocalDate.now());
